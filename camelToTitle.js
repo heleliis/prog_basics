@@ -1,33 +1,14 @@
-function getWords(word) {
-  if (word === "") {
-    return [];
-  }
-  const words = [];
-  let index = 0;
-  for (let i = 0, len = word.length; i < len; i++) {
-    if (
-      "A" <= word[i] &&
-      word[i] <= "Z" &&
-      (("a" <= word[i - 1] && word[i - 1] <= "z") ||
-        ("a" <= word[i + 1] && word[i + 1] <= "z"))
-    ) {
-      words.push(word.slice(index, i));
-      index = i;
-    }
-  }
-  words.push(word.slice(index));
-  return words;
-}
-
 function camelToTitleCase(word) {
   if (word === "") {
     return "";
   }
+  const words = word.match(/([A-Z]?[^A-Z]*)/g).filter(Boolean);
 
-  let words = getWords(word);
-  words[0] = words[0][0].toUppercase() + words[0].slice(1);
+  if (words.length > 0) {
+    words[0] = words[0][0].toUpperCase() + words[0].slice(1);
+  }
 
-  return words.join(" ");
+  return words.join(" ").trim();
 }
 
-console.log(camelToTitleCase("TerePäevast"));
+console.log(camelToTitleCase("firstChild"));
